@@ -37,4 +37,6 @@ AUTH_USER_MODEL = 'MEMBER.USER'```추가
  - 중간자 테이블에 장고에서 생성이된 것과 똑같이 만들어준다
  - makemigrations하고 migrate 할 때는 DB를 속이기위해서 --fake를 사용한다
 10. AUTH_USER_MODEL을 settings.py에 생성을 해두어라 이미 진행된 migrations에서는 바꾸기가 힘들다
-  -  
+  - from django.conf import settings를 사용
+  - User를 settings.AUTH_USER_MODEL로 외래키를 불러온다
+  - 
