@@ -1,0 +1,17 @@
+{% extends 'common/base.html'%}
+{%block content%}
+    <img src="{{ post.photo.url}}" alt="">
+    <div>{{post.author}}</div>
+    <div>{{post.like_count}}</div>
+
+    <h5>댓글목록</h5>
+    {% if post.comment_set.all %}
+        {% for comment in post.comment_set.all %}
+        <div>
+            <div>작성자 : {{comment.author}}</div>
+            <div>내용 : {{comment.content}}</div>
+            <div>내용 : {{comment.comment.created_date}}</div>
+        </div>
+    {%endfor%}
+    {%endif%}
+{%endblock%}

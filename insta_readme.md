@@ -14,7 +14,7 @@
 12. 환경설정 -> project interpreter 설정 -> usr/local/var/pyenv/versions/instagram-p-env/python
 13. ./manage.py startapp post로 생성
 14. from django.contrib.auth.models import AbstractUser
-15.settings.py 에 ```#custom user
+15. settings.py 에 ```#custom user
 AUTH_USER_MODEL = 'MEMBER.USER'```추가
 
 
@@ -39,4 +39,49 @@ AUTH_USER_MODEL = 'MEMBER.USER'```추가
 10. AUTH_USER_MODEL을 settings.py에 생성을 해두어라 이미 진행된 migrations에서는 바꾸기가 힘들다
   - from django.conf import settings를 사용
   - User를 settings.AUTH_USER_MODEL로 외래키를 불러온다
-  - 
+11. post view작성
+  - templates폴더 루트 아래 생성
+  - templates를 settings에 추가
+  - TEMPLATE_DIR = os.path.join(BASE_DIR,'templates') // TEMPLATES = [TEMPLATE_DIR,] 까지 추가
+  - config/urls.py에 include로 작성
+  - 프로젝트 메인에 urls.py에 작성
+  - url(r'^post/',include(views.post_list),
+  - 메인에서 오는 주소를 받는 곳을 post app에 urls.py로 생성
+```from django.conf.urls import url
+from . import views
+urlpatterns = [
+    url(r'^$', views.post_list),
+]
+```
+
+  - post로 받은 주소를 post_list뷰어로 보내준다
+  - views.post_list에서는 render가되어 post_list.html로 전달
+12. admin.py에 설정
+- ```from django.contrib import admin
+from .models import Post
+class PostAdmin(admin.ModelAdmin):
+    pass
+admin.site.register(Post,PostAdmin)
+```
+
+13. admin 생성 두가지 방법
+   - ./manage createsuperuser로 생성
+   - Auth_user_model 사용으로 db_shell에서 u = User.objects.create_user('name')
+   - u.set_password('password insert')
+14. 이미지파일을 업로드했을 때 설정을 하지 않은 기본일때는 루트 디렉토리에 저장이된다 이것을 방지하고자 루트 폴더에 media 폴더를 생성한다 .gitignore에 media가 추가가되어있어서 git했을때 저장이 되지않게 지정되어있다.
+ - 이미지 파일 업로드를 media에 폴더로 저장이되는것을 확인
+ - 하지만 아직 이미지 파일을 post에서 보는건 되지않는다
+ - 이유는 어디를 참조를 해서 불러와야될지를 설정을 하지 않았기때문이다
+ - 메인 admin.py에 media를 추가로 수정한다
+ - urlpatterns = []+ static(
+    settings.MEDIA_URL,
+    document_root=settings.MEDIA_ROOT)
+ - 왜 + 일까? 뒤에 리스트를추가하기위해서라고 함
+ - static함수가 리스트로 리턴해준다
+ - media_url로 접근했을때 media_root로 가게 해준다
+ - 이미지파일을 모든 post에 다 넣어주고
+ - 이미지를 html에서 확인
+ - 이미지파일을 또 다시 관리를 해야된다 한파일에 데이타파일을 계속 업로드를 하게되면 용량이커져서 느려지게된다 
+ - 그래서 생성하는 upload_to를 이용하여 지정하여준다
+ - 루트 디렉토리(MEDIA_ROOT)아래에 지정한 이름으로 폴더를 없다면 만들고 있다면 그안에 파일을 저장하게된다
+ - 
