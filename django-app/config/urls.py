@@ -21,4 +21,5 @@ from django.contrib import admin
 urlpatterns = [
                   url(r'^admin/', admin.site.urls),
                   url(r'^post/', include('post.urls')),
+                  url(r'^member/', include('member.urls')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
