@@ -19,6 +19,7 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 # Custom member
 AUTH_USER_MODEL = 'member.User'
 
+
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
