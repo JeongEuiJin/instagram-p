@@ -16,7 +16,7 @@ def post_detail(request, post_pk):
     try:
         post = Post.objects.get(pk=post_pk)
         context = {
-            'post':post
+            'post': post
         }
 
     except Post.DoesNotExist as e:
@@ -24,4 +24,3 @@ def post_detail(request, post_pk):
         return redirect('post:post_list')
 
     return render(request, 'post/post_detail.html', context)
-
