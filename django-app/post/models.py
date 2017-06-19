@@ -17,6 +17,9 @@ class Post(models.Model):
         blank=True,
     )
 
+    class Meta:
+        ordering=['-pk',]
+
     def add_comment(self, user, content):
         return self.comment_set.create(author=user, content=content)
 

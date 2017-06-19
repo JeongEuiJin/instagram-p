@@ -1,50 +1,73 @@
 {%load static%}
 <!doctype html>
 <html lang="ko">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Instagram-p</title>
-    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
-    <link rel="stylesheet" href="{% static 'css/layout.css' %}">
-    <link rel="stylesheet" href="{% static 'css/post.css' %}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Instagram-p</title>
+  <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'css/layout.css' %}">
+  <link rel="stylesheet" href="{% static 'css/post.css' %}">
+  <link rel="stylesheet" href="{% static 'css/common.css' %}">
 </head>
+
 <body>
-<div id="wrap">
-  <header class="top-header">
-    <nav>
-      <div class="nav-left nav-item">
-        <a href="">
-          <img src="{%static 'image/logo.png'%}" alt="">
-        </a>
+  <div id="wrap">
+    <header class="top-header">
+      <nav>
+        <div class="nav-left nav-item">
+          <a href="">
+            <img src="{%static 'image/logo.png'%}" alt="">
+          </a>
+        </div>
+
+        <div class="nav-center nav-item">
+          <input type="text" placeholder="검색">
+
+        </div>
+
+        <div class="nav-right nav-item">
+          <a href="">
+            <img src="{%static 'image/icon_explore.png'%}" alt="">
+          </a>
+          <a href="">
+            <img src="{%static 'image/icon_heart.png'%}" alt="">
+          </a>
+          <a href="">
+            <img src="{%static 'image/icon_profile.png'%}" alt="">
+          </a>
+        </div>
+
+      </nav>
+      <div>
+        <nav>
+          {% if user.is_authenticated %}
+          <span>{{user}}로 로그인중</span>
+          <a href="{%url 'member:logout'%}" class=".btn">Logout</a>
+          {% else %}
+          <a href="{%url 'member:login'%}" class=".btn">Login</a>
+          {% endif %}
+        </nav>
       </div>
+    </header>
+    <div class="test">
+      <!-- {% if user.is_authenticated %}
+            {{user}}이 로그인 중입니다
+        {% else %}
+            로그인하세요
+        {% endif%} -->
 
-      <div class="nav-center nav-item">
-        <input type="text" placeholder="검색">
-
-      </div>
-
-      <div class="nav-right nav-item">
-        <a href="">
-          <img src="{%static 'image/icon_explore.png'%}" alt="">
-        </a>
-        <a href="">
-          <img src="{%static 'image/icon_heart.png'%}" alt="">
-        </a>
-        <a href="">
-          <img src="{%static 'image/icon_profile.png'%}" alt="">
-        </a>
-      </div>
-
-    </nav>
-  </header>
-    <div class="container">
-    {% block content %}
-    {% endblock %}
     </div>
-</div>
+
+
+    <div class="container">
+      {% block content %}
+      {% endblock %}
+    </div>
+  </div>
 </body>
+
 </html>
